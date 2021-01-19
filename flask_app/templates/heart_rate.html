@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10" style="padding: 0%;">
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;"> My Heart Rate</h1>
+            <p style="text-align: center;"><a href="{{ url_for('add_heart') }}" class="btn btn-danger">Add Heart Rate Data</a></p>
+        </div>
+    </div>
+    {% if not heart_rates %}
+        <p style="text-align: center;">You currently do not have any heart rate data</p>
+    {% else %}
+        <h5 style="text-align: center;">Last Recorded Measurment: {{ heart_rates[0].heartrate }} bpm</h5>
+        <h5 style="text-align: center;">Previous Recordings</h5>
+        <table class = "table table-striped" style="width:100%; padding-top: 50px; text-align: center;">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Measurement</th>
+            </tr>
+            </thead>
+            {% for h in heart_rates %}
+                <tr>
+                    <td>{{ h.date }}</td>
+                    <td>{{ h.heartrate }} bpm</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</main>
+{% endblock content %}

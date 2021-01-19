@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10">
+    <h1 style="text-align: center;"> Add a Workout</h1>
+    <h5 style="text-align: center;">Was it a run or a workout?</h5>
+    <div style="text-align: center;">
+        <a href="{{ url_for('add_run') }}"><button class="btn btn-primary">Run</button></a>
+        &nbsp
+        <a href="{{ url_for('add_workout') }}"><button class="btn btn-primary">Not a Run</button></a>
+    </div>
+</main>
+{% endblock content %}

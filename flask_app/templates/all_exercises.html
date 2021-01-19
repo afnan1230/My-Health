@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10" style="padding: 0%;">
+    <div class = "container">
+        <div class = "jumbotron">
+            <h1 style="text-align: center;">All Exercises</h1>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <th width = "15%">Date</th>
+            <th width = "15%">Workout</th>
+            <th width = "15%">Duration</th>
+        </thead>
+        <tbody>
+            {% for w in workouts %}
+                <tr>
+                    <td>{{ w.date }}</td>
+                    <td>{{ w.exercise }}</td>
+                    <td>{{ w.time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock content %}

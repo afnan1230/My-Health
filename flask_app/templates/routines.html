@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10">
+    <h1 style="text-align: center;">My Routines</h1>
+    <p style="text-align: center;"><a href="{{ url_for('add_routine') }}" class="btn btn-primary">Add a Routine</a></p>
+    {% if not routine %}
+        <p style="text-align: center;">You do not currently have a routine created</p>
+    {% else %}
+    <table style="width:150%; padding-top: 50px; text-align: left;">
+        <tr>
+          <th>Workout</th>
+          <th>Frequency</th>
+          <th>Need to do today?</th>
+        </tr>
+        {% for r in routine %}
+        <tr>
+          <td>{{ r }}</td>
+          <td>Every {{ routine[r][0] }} day(s)</td>
+          {% if  (day - routine[r][1]).days >= 0  and  (day - routine[r][1]).days% routine[r][0] ==0  %}
+          <td style="padding-right: 0%;">Yes</td>
+          {% else %}
+          <td style="padding-right: 0%;">No</td>
+          {% endif %}
+          <td style="padding-left: 100px;"><a href="{{ url_for('edit_routine', rout = r) }}" class="btn btn-primary" style="margin-right: 20px;">Edit</a><button type = "button" class="btn btn-danger mb1 bg-red" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+          <td style="padding-left: 100px;"></td>
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Delete from routine?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <form action="{{ url_for('delete_routine', rout= r) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+</main>
+{% endblock content %}

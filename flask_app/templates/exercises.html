@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10" style="padding: 0%;">
+    <div class = "container" >
+        <div class = "jumbotron">
+            <h1 style="text-align: center;"> My Exercises</h1>
+            <p style="text-align: center;"><a href="{{ url_for('run_or_workout') }}" class="btn btn-primary">Add a Workout</a></p>
+        </div>
+    </div>
+    <table>
+    
+    {% if not workouts and not runs %}
+        <p style="text-align: center;">You currently do not have any workout data</p>
+    {% else %}
+    <h5 style="text-align: center;">Most Recent Workouts</h5>
+    {% if not workouts %}
+    <p style="text-align: center;"> You do not have any workouts registered :(</p>
+    {% else %}
+    <table class = "table table-striped"style="width:150%;">
+        {% if not data %}
+        <p style="text-align: center;">No workouts recorded for this week</p>
+        {% else %}
+        <thead>
+            <th width = "15%">Date</th>
+            <th width = "15%">Workout</th>
+            <th width = "15%">Duration</th>
+        </thead>
+        <tbody>
+        {% for w in workouts %}
+            {% if (today-w.date).days <  7%}
+            <tr>
+                <td>{{ w.date }}</td>
+                <td>{{ w.exercise }}</td>
+                <td>{{ w.time }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    </tbody>
+    </table>
+    <p style="text-align: center;">To view all past workouts click <a href="{{ url_for('all_exercises') }}">here</a></p>
+    {% endif %}
+    <h5 style="text-align: center;">Most Recent Runs</h5>
+    {% if not runs %}
+        <p style="text-align: center;"> You do not have any runs registered :(</p>
+    {% else %}
+    <table class="table table-striped" style="width:150%;">
+        {% if not run_data %}
+        <p style="text-align: center;">No runs recorded for this week</p>
+        {% else %}
+        <thead>
+            <th width = "15%">Date</th>
+            <th width = "15%">Distance (miles)</th>
+            <th width = "15%">Duration</th>
+        </thead>
+        {% for r in runs %}
+            <tr>
+                <td>{{ r.date }}</td>
+                <td>{{ r.distance }} miles</td>
+                <td>{{ r.time }}</td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+</table>
+<p style="text-align: center;">To view all past runs click <a href="{{ url_for('all_runs') }}">here</a></p>
+    {% endif %}
+    {% endif %}
+
+</main>
+{% endblock content %}

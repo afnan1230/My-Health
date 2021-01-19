@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'dashboard.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'sidebar.css') }}">
+
+    <title>MyHealth - {{ title }}</title>
+</head>
+<body>
+    
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+            <a class="navbar-brand mr-4" href="/">MyHealth</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </div>
+            </div>
+        </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-2 bg-light d-none d-md-block sidebar">
+            <div class="left-sidebar">
+              <ul class="nav flex-column sidebar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">
+                    <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                    Candidates
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('profile') }}">
+                    <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                    My Profile
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('routines') }}">
+                    <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                    My Routine
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('personal_stats') }}">
+                    <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                    Personal Statistics
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-section" style="text-align: center;">
+        <div class = "media">
+            <div class="media-body">
+                <img class="rounded-circle account-img" src="{{ image_file }}"> 
+                <h2 class="account-heading">{{ current_user.first_name }} {{ current_user.last_name }}</h2>
+                <p class = "text-secondary">{{ current_user.email }}</p>
+                <p class = "text-secondary">Height: {{ height_string }} </p>
+                <p class = "text-secondary">Weight: {{ current_user.weight }} lbs</p>
+            </div>
+        </div>
+          <form method="POST" action="" enctype = "multipart/form-data">
+              {{ form.hidden_tag() }}
+              <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Account Info</legend>
+                  <div class = "form-group">
+                    {{ form.name.label(class="form-control-label") }}
+
+
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        <div class = "invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class = "form-group">
+                    {{ form.last_name.label(class="form-control-label") }}
+
+
+                    {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class = "invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.last_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                  <div class="form-group">
+                      {{ form.username.label(class="form-control-label") }}
+  
+  
+                      {% if form.username.errors %}
+                          {{ form.username(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                              {% for error in form.username.errors %}
+                                  <span>{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                      {% else %}
+                          {{ form.username(class="form-control form-control-lg") }}
+                      {% endif %}
+                  </div>
+                  <div class="form-group">
+                      {{ form.email.label(class="form-control-label") }}
+                      {% if form.email.errors %}
+                          {{ form.email(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                              {% for error in form.email.errors %}
+                                  <span>{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                      {% else %}
+                          {{ form.email(class="form-control form-control-lg") }}
+                      {% endif %}
+                  </div>
+                  <div class="form-group">
+                      {{ form.height.label(class="form-control-label") }}
+                      {% if form.height.errors %}
+                          {{ form.height(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                              {% for error in form.height.errors %}
+                                  <span>{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                      {% else %}
+                          {{ form.height(class="form-control form-control-lg") }}
+                      {% endif %}
+                  </div>
+                  <div class="form-group">
+                      {{ form.weight.label(class="form-control-label") }}
+  
+  
+                      {% if form.weight.errors %}
+                          {{ form.weight(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                              {% for error in form.weight.errors %}
+                                  <span>{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                      {% else %}
+                          {{ form.weight(class="form-control form-control-lg") }}
+                      {% endif %}
+                  </div>
+                  <div class = "form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class = "form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class = "text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                  </div>
+              </fieldset>
+              <div class="form-group">
+                  {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+          </form>
+      </div>
+    
+      
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

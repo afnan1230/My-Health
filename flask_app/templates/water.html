@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10" style="width: 170%; padding: 0%;">
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;"> My Water Intake</h1>
+            <p style="text-align: center; "><a href="{{ url_for('add_water') }}" class="btn btn-success" style="color: white;">Add Water Intake</a></p>
+        </div>
+    </div>
+    {% if not waters %}
+        <p style="text-align: center;">You currently do not have any data for water intake</p>
+    {% else %}
+        <h5 style="text-align: center;">Cups Today: {{ cups_today }}</h5>
+        {% if cups_today<8 %}
+        <p style="text-align: center;">You still need to drink {{8 - cups_today }} more cups of water today</p>
+        {% else %}
+            <p style="text-align: center;">You have drinken all the water you need to today!</p>
+        {% endif %}
+    
+        <h5 style="text-align: center;">Previous Days</h5>
+        <table class ="table table-striped" style="width:100%; padding-top: 50px; text-align: center;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Number of Cups of Water</th>
+                </tr>
+            </thead>
+            {% for w in most_water_list %}
+                <tr>
+                    {% if w != today and (today-w).days < 7 %}
+                    <td>{{ w }}</td>
+                    <td>{{ most_water[w] }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </main>
+    {% endif %}
+    
+
+{% endblock content %}

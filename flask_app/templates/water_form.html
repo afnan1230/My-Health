@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10">
+    <form method="POST" action="" enctype = "multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <div class = "form-group">
+              {{ form.date.label(class="form-control-label") }}
+
+
+              {% if form.date.errors %}
+                  {{ form.date(class="form-control form-control-lg is-invalid") }}
+                  <div class = "invalid-feedback">
+                      {% for error in form.date.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.date(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class = "form-group">
+              {{ form.num_cups.label(class="form-control-label") }}
+
+
+              {% if form.num_cups.errors %}
+                  {{ form.num_cups(class="form-control form-control-lg is-invalid") }}
+                  <div class = "invalid-feedback">
+                      {% for error in form.num_cups.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.num_cups(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+    
+</main>
+{% endblock content %}

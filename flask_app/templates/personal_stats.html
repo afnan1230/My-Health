@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+        <h1 style="text-align: center;">My Statistics</h1>
+        </div>
+    </div>
+    <h5 style="text-align: left; margin-left: 10px;">Personal Bests</h5>
+    <div class = "card-deck">
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+                <h5 class="card-title">Fastest Run</h5>
+                {% if fastest_run[0] != 100000 %}
+                <p class="card-text">{{ fastest_run[1] }}/mi on {{ fastest_run[2] }}</p>
+                {% else %}
+                <p class = "card-text">No data :(</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Longest Run</h5>
+            {% if longest_run[0] != 0 %}
+            <p class="card-text">{{ longest_run[0] }} miles on {{ longest_run[1] }}</p>
+            {% else %}
+            <p class="card-text">No data :(</p>
+            {% endif %}
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Most Active Day</h5>
+            {% if most_activity %}
+            <p class="card-text">{{ most_activity[0] }} on {{ most_activity[1] }}</p>
+            {% else %}
+            <p class ="card-text">No data :(</p>
+            {% endif %}
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Most Hydrated Day</h5>
+            {% if most_water != 0 %}
+            <p class="card-text">{{ most_water }} cups on {{ water_date }} </p>
+            {% else %}
+            <p class="card-text">No data :(</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>  
+    <h5 style="text-align: left; margin-left: 10px;">Personal Averages</h5>
+    <div class = "card-deck">
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+                <h5 class="card-title">Average Pace</h5>
+                <p class="card-text">{{ avg_pace }}/mi</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Average Distance</h5>
+            <p class="card-text">{{ avg_distance }} miles</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Average Time Active</h5>
+            <p class="card-text">{{ avg_time }}</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Average Cups of Water per day</h5>
+            <p class="card-text">{{ avg_water }} cups per day</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-primary">
+            <h5 class="card-title">Average Heart Rate</h5>
+            <p class="card-text">{{ avg_heartrate }} bpm</p>
+            </div>
+        </div>
+    </div> 
+{% endblock content %}

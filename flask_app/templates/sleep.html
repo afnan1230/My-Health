@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<main role="main" class="ml-sm-auto col-lg-10" style="padding: 0px;">
+    <div class ="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;"> My Sleep</h1>
+            <p style="text-align: center;"><a href="{{ url_for('add_sleep') }}" class="btn btn-warning">Add Sleep Data</a></p>
+        </div>
+    </div>
+    {% if not sleeps %}
+        <p style="text-align: center;">You currently do not have any sleep data</p>
+    {% else %}
+        <h5 style="text-align: center;">Last Sleep: {{ (sleeps[0].end_time - sleeps[0].start_time).seconds//3600 }} hours {{ ((sleeps[0].end_time - sleeps[0].start_time).seconds//60) % 60 }} minutes</h5>
+        <h5 style="text-align: center;">Previous Days</h5>
+        <table class="table table-striped" style="width:100%; padding-top: 50px; text-align: center;">
+            <thead>
+                <tr>
+                    <th width = "25%">Start Time</th>
+                    <th width = "25%">End Time</th>
+                    <th width = "25%">Total Time</th>
+                    <th width = "25%">Date</th>
+                </tr>
+            </thead>
+            {% for s in sleeps %}
+                {% if (today - s.end_time).days < 7 %}
+                <tr>
+                    <td>{{ s.start_time.strftime("%H:%M %p") }}</td>
+                    <td>{{ s.end_time.strftime("%H:%M %p") }}</td>
+                    <td>{{ (s.end_time - s.start_time).seconds//3600 }} hours {{ ((s.end_time - s.start_time).seconds//60) % 60 }} minutes</td>
+                    <td>{{ s.end_time.strftime("%m/%d/%Y") }}</td>
+                    
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    {% endif %}
+</main>
+{% endblock content %}

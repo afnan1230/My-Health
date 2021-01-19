@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename = 'main.css') }}">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename = 'dashboard.css') }}">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename = 'sidebar.css') }}">
+
+    <title>MyHealth - {{ title }}</title>
+</head>
+<body>
+    
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+            <a class="navbar-brand mr-4" href="/">MyHealth</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </div>
+            </div>
+        </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light d-none d-md-block sidebar">
+          <div class="left-sidebar">
+            <ul class="nav flex-column sidebar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                  Candidates
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('profile') }}">
+                  <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                  My Profile
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('routines') }}">
+                  <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                  My Routine
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('personal_stats') }}">
+                  <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
+                  Personal Statistics
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main role="main" class="ml-sm-auto col-lg-10">
+      <div class = "container">
+        <div class = "jumbotron">
+          <h1 style = "text-align: center;">Hello {{ current_user.first_name }}!</h1>
+          {% if not routine %}
+            <p style="text-align: center;">You currently do not have a routine set up. To start one, click <a href="{{ url_for('routines') }}"> here</a></p>
+          {% else %}
+            <p style="text-align: center;">What you have today:</p>
+            {% for r in routine %}
+              {% if  (day - routine[r][1]).days >= 0  and  (day - routine[r][1]).days% routine[r][0] == 0  %}
+                <p style = "text-align: center;">{{ r }}</p>
+              {% endif %}
+            {% endfor %}
+            {% if stuff == 0 %}
+              <p style="text-align: center;">Nothing :(</p>
+            {% endif %}
+          {% endif %}
+      </div>
+    </div>
+    </main>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10" style="margin-right: -12%;">
+      <div class="card-columns">
+        <div class="card bg-primary" href="#">
+          <a href="{{ url_for('exercises') }}" class="btn btn-primary stretched-link">
+          <div class="card-body text-center" href="#">
+            <h5 class = "card-text">My Exercises</h5>
+            <p class="card-text" style="color: black;">View your workouts for the week or add a new workout session.</p>
+          </div>
+        </a>
+        </div>
+        <div class="card bg-warning">
+          <a href="{{ url_for('sleep') }}" class="btn btn-warning stretched-link">
+          <div class="card-body text-center">
+            <h5 class= "card-text">My Sleep</h5>
+            <p class="card-text">View your sleep patterns for the week or add new sleep data.</p>
+          </div>
+          </a>  
+        </div>
+        <div class="card bg-success">
+          <a href="{{ url_for('water') }}" class="btn btn-success stretched-link">
+          <div class="card-body text-center">
+            <h5 class="card-text">Water Intake</h5>
+            <p class="card-text" style="color: black;">Record your water intake for the day and view your water intake for the week.</p>
+          </div>
+          </a>
+        </div>
+        <div class="card bg-danger">
+          <a href="{{ url_for('heart_rate') }}" class="btn btn-danger stretched-link">
+          <div class="card-body text-center">
+            <h5 class = "card-text" style="text-align: center;">Heart Rate</h5>
+            <p class="card-text" style="color: black;">Record your heart rate at a given time and view your most recent heart rate data</p>
+          </div>
+          </a>
+        </div>
+      </div>
+    </main>
+    
+      
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
